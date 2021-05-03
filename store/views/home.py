@@ -27,10 +27,24 @@ class Index(View):
         else:
             cart = {}
             cart[product] = 1
-#
+
         request.session['cart'] = cart
         print('cart' , request.session['cart'])
-        return redirect('homepage')
+        # if request.session['category']:
+        #        print(request.session['category']+'ok')
+        cat = request.GET.get('category')
+        categoryID=None
+        if request.session['category']:
+            categoryID = int(request.session['category'])
+        elif cat==None:
+            request.session['category']=None
+
+        #
+        # print(categoryID)
+        if not categoryID:
+          return redirect('homepage')
+        else:
+          return redirect('http://127.0.0.1:8000/?category='+str(categoryID))
 #
 #
 #
@@ -41,6 +55,11 @@ class Index(View):
             products = None
             categories = Category.get_all_categories()
             categoryID = request.GET.get('category')
+            if categoryID:
+                request.session['category'] = categoryID
+            elif not categoryID:
+                request.session['category'] = None
+            # print(request.session['category'])
             name = None
             if categoryID:
                 for cat in categories:
@@ -57,7 +76,7 @@ class Index(View):
             data['categories'] = categories
             data['name'] = name
 
-            print('you are : ', request.session.get('customer'))
+            # print(name)
             return render(request, 'index.html', data)
 #         # print()
 #         return HttpResponseRedirect(f'/store{request.get_full_path()[1:]}')

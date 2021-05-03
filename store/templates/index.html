@@ -6,7 +6,7 @@
 {% load custom_filter %}
 <!-- body -->
 <div class="container-fluid  "
-style="margin-top: 80px;">
+style="margin-top: 90px;">
 	<div class="row">
 
 		
@@ -30,11 +30,11 @@ style="margin-top: 80px;">
 		<div class="btn mb-2 p-1 pl-5 sticky-top navbar "
 		style="color: white;background-color: rgb(128, 0, 79);height: 40px;
 		position: fixed;
-        top: 70px;
+        top: 60px;
         width: 100%;"
 		><h4 >{{name}}</h4></div>
 		{% endif %}
-			<div class="row mx-auto" style="margin-top: 80px;">
+			<div class="row mx-auto" style="margin-top: 50px;">
 				{% for product in products %}
 				<div class="card mx-auto mb-3" id={{product.id}} style="width: 18rem;">
 					<img class="card-img-top" src="{{product.image.url}}" alt="Card image cap">
@@ -49,6 +49,7 @@ style="margin-top: 80px;">
 						<div class="row no-gutters">
 							<form action="/#{{product.id}}" class="col-2 " method="POST">
 								{% csrf_token %}
+
 								<input hidden type="text" name='product' value='{{product.id}}'>
 								<input hidden type="text" name='remove' value='True'>
 								<input type="submit" value=" - " class="btn btn-block btn-secondary border-right">
